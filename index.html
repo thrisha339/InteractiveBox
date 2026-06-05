@@ -2,69 +2,188 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Move Box</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move Box - Interactive</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        .info-panel {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 14px;
+        }
+        #game-area {
+            position: relative;
+            width: 700px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
         #box {
             width: 50px;
             height: 50px;
-            background-color: steelblue;
-            position: absolute; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: absolute;
             top: 100px;
             left: 100px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.1s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        #box:hover {
+            transform: scale(1.1);
         }
         .controls {
-            margin-top: 200px;
-            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .direction-controls {
+            display: grid;
+            grid-template-areas: 
+                ". up ."
+                "left . right"
+                ". down .";
+            gap: 8px;
         }
         button {
-            margin: 5px;
-            padding: 10px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 70px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .btn-up {
+            grid-area: up;
+            background: #f5576c;
+            color: white;
+        }
+        .btn-down {
+            grid-area: down;
+            background: #4facfe;
+            color: white;
+        }
+        .btn-left {
+            grid-area: left;
+            background: #43e97b;
+            color: white;
+        }
+        .btn-right {
+            grid-area: right;
+            background: #fa709a;
+            color: white;
+        }
+        .btn-reset {
+            background: #667eea;
+            color: white;
+            padding: 10px 25px;
         }
     </style>
 </head>
 <body>
-
-    <div id="box">Move</div>
-
-    <div class="controls">
-        <button onclick="moveUp()">Up</button>
-        <button onclick="moveLeft()">Left</button>
-        <button onclick="moveRight()">Right</button>
-        <button onclick="moveDown()">Down</button>
+    <h1>🎮 Move Box</h1>
+    <div class="info-panel">
+        <strong>Position:</strong> <span id="position">X: 100, Y: 100</span> | 
+        <strong>Steps:</strong> <span id="step-count">0</span>
     </div>
-
+    <div id="game-area">
+        <div id="box">Move</div>
+    </div>
+    <div class="controls">
+        <div class="direction-controls">
+            <button class="btn-up" onclick="moveUp()">▲ Up</button>
+            <button class="btn-left" onclick="moveLeft()">◀ Left</button>
+            <button class="btn-right" onclick="moveRight()">Right ▶</button>
+            <button class="btn-down" onclick="moveDown()">▼ Down</button>
+        </div>
+        <button class="btn-reset" onclick="resetBox()">🔄 Reset</button>
+    </div>
     <script>
         const box = document.getElementById("box");
+        const positionDisplay = document.getElementById("position");
+        const stepCountDisplay = document.getElementById("step-count");
         let topPos = 100;
         let leftPos = 100;
         const step = 20;
-
+        let stepCount = 0;
+        const gameAreaWidth = 700;
+        const gameAreaHeight = 400;
+        const boxSize = 50;
         function updatePosition() {
+            // Boundary detection
+            topPos = Math.max(0, Math.min(topPos, gameAreaHeight - boxSize));
+            leftPos = Math.max(0, Math.min(leftPos, gameAreaWidth - boxSize));
             box.style.top = topPos + "px";
             box.style.left = leftPos + "px";
+            positionDisplay.textContent = `X: ${leftPos}, Y: ${topPos}`;
         }
-
         function moveUp() {
             topPos -= step;
+            stepCount++;
+            stepCountDisplay.textContent = stepCount;
             updatePosition();
         }
-
         function moveDown() {
             topPos += step;
+            stepCount++;
+            stepCountDisplay.textContent = stepCount;
             updatePosition();
         }
-
         function moveLeft() {
             leftPos -= step;
+            stepCount++;
+            stepCountDisplay.textContent = stepCount;
             updatePosition();
         }
-
         function moveRight() {
             leftPos += step;
+            stepCount++;
+            stepCountDisplay.textContent = stepCount;
             updatePosition();
         }
+        function resetBox() {
+            topPos = 100;
+            leftPos = 100;
+            stepCount = 0;
+            stepCountDisplay.textContent = stepCount;
+            updatePosition();
+        }
+        // Initialize position
+        updatePosition();
     </script>
-
 </body>
-
 </html>

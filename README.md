@@ -1,15 +1,22 @@
-# InteractiveBox
-A simple interactive web project that lets users move a box around the screen using directional buttons. This project demonstrates basic **HTML**, **CSS**, and **JavaScript** concepts like DOM manipulation, event handling, and positioning.
+# 🎮 Move Box - Interactive Web Project
+
+A simple and interactive web application that allows users to move a box around a game area using directional buttons. The project demonstrates core **HTML**, **CSS**, and **JavaScript** concepts such as DOM manipulation, event handling, dynamic styling, and boundary management.
 
 ## Features
 
-- Move the box **up**, **down**, **left**, or **right** using buttons.
-- Adjustable step size for movement.
-- Smooth updates using CSS `position: absolute`.
-- Lightweight and beginner-friendly.
+- ⬆️ Move the box Up
+- ⬇️ Move the box Down
+- ⬅️ Move the box Left
+- ➡️ Move the box Right
+-  Real-time position tracking (X and Y coordinates)
+-  Step counter to track total movements
+-  Boundary detection to prevent the box from leaving the game area
+- 🔄 Reset button to restore the initial position and step count
+-  Modern and responsive user interface with hover effects
 
 ## Technologies Used
 
-- **HTML5** – Structure of the page.
-- **CSS3** – Styling and positioning of the box and controls.
-- **JavaScript** – Handling button clicks and updating the box position.
+- **HTML5** – Page structure and content
+- **CSS3** – Styling, layout, gradients, animations, and responsive design
+- **JavaScript (ES6)** – Box movement logic, position updates, boundary checking, and step counting
+
